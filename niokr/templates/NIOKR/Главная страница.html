@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="{% static 'css/NIOKR.css' %}">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div class="header">
+            <a href="http://127.0.0.1:8000">
+                    <img src="https://static.wixstatic.com/media/41d000_a534fb96fd2ff380519313d02b80f75b.png/v1/fill/w_70,h_45,al_c,usm_0.50_1.20_0.00/41d000_a534fb96fd2ff380519313d02b80f75b.png">
+                <h1>Выполнение НИОКР</h1>
+            </a>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="login">
+                <input type="submit" value="Bыход" onclick="window.location='http://127.0.0.1:8000/logout/'">
+                <input type="submit" value="Bыбрать Заявку" onclick="window.location='http://127.0.0.1:8000/expert/'">
+            </div>  
+            {% else %}
+            <div class="login">
+                <input type="submit" value="Bход" onclick="window.location='http://127.0.0.1:8000/login/'">
+            </div>   
+            {% endif %} 
+            <div class="greeting"> 
+                <p>Добро пожаловать,</p>
+                <p>Выберите область НИОКР, которая вас интересует</p>
+            </div>
+            <div>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">Обработка Материалов</button>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">Строительство</button>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">Энергообеспечение</button>
+
+            </div>
+            <div>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">IT</button>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">Приборостроение</button>
+                <button class="button" onclick="window.location='http://127.0.0.1:8000/request/'">Экология</button>    
+            </div>
+            <div class="contacts">
+                <h2>Контакты</h2>
+                <p>Адрес: Россия, 454080 Челябинск, проспект Ленина, 76</p>
+                <p>Тел./факс: +7 (351) 267-99-00</p>
+                <p>E-mail: admin@susu.ac.ru</p>
+                
+            </div>
+            <footer>
+
+            </footer>
+        </div>
+    </body>
+</html>
