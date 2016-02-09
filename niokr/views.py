@@ -23,6 +23,8 @@ def post_login(request):
 		user = authenticate(username=username, password=password)
 		print user
 		if user is not None:
+			print 'I am not wrong'
+			login(request, user)
 			return HttpResponseRedirect('http://127.0.0.1:8000/expert/')
 		else:
 			return render(request, 'NIOKR/index.html', {'form': auth_form})
