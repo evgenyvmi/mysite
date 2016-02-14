@@ -20,9 +20,9 @@
             <form action="http://127.0.0.1:8000/request/", method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
-
                 <input type="submit" value="Отправить">  
             </form>
+            
             </div>
             <div class="link_to_main_page">
                 <input type="submit" value="На Главную" onclick="window.location='http://127.0.0.1:8000'">

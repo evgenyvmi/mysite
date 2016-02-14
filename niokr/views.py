@@ -2,8 +2,10 @@
 from django.shortcuts import render
 from .models import Request
 from .models import Expert
+from .models import Client
 from django.http import HttpResponseRedirect
 from .forms import RequestForm
+from .forms import ClientForm
 from django.contrib.auth import logout
 from .forms import ExpertForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -34,17 +36,16 @@ def post_login(request):
 #def post_request(request):
 #	return render(request, 'NIOKR/Заявка.html', {})
 def expert(request):
-	print 'jkkljhkjhljhkih;jh;oj;ojloj;kj;kj;kjlkj'
 	if request.POST:
 		
 		form = ExpertForm(request.POST)
-		current_user = request.user
-		print current_user.id
-
+		form.save()
+		return HttpResponseRedirect('http://127.0.0.1:8000/')
 	else:		
-		form = ExpertForm()
+		form = ExpertForm
+		show_requests = Request.objects.values()
 
-	return render(request, 'NIOKR/Эксперт.html', {'Expert': form})
+	return render(request, 'NIOKR/Эксперт.html', {'Expert': form, 'show_requests': show_requests})
 
 def create_request(request):
     # if this is a POST request we need to process the form data
@@ -65,5 +66,26 @@ def create_request(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         form = RequestForm()
-
+        
 	return render(request, 'NIOKR/Заявка.html', {'form': form})
+
+def create_client(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+    	print 'shit123'
+        # create a form instance and populate it with data from the request:
+        form = ClientForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            form.save()
+            print 'shit'
+            return HttpResponseRedirect('http://127.0.0.1:8000/request')
+        else:
+        	return render(request, 'NIOKR/Client.html', {'form': form})
+   			
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ClientForm()
+        
+	return render(request, 'NIOKR/Client.html', {'form': form})
