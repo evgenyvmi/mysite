@@ -8,12 +8,12 @@ from niokr.models import Client
 class RequestForm(ModelForm):
 	class Meta: 
 		model = Request
-		fields = ['client_id', 'research_interests_id', 'short_description']
+		fields = ['client', 'research_interests', 'description']
 
 class ExpertForm(ModelForm):
 	class Meta:
 		model = Expert
-		fields = ['current_request_id']
+		fields = '__all__'
 
 class ClientForm(ModelForm):
 	class Meta:

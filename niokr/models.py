@@ -21,25 +21,29 @@ class Client(models.Model):
 	position = models.CharField(verbose_name=u'Должность', max_length=50, null=True)
 	phone_number = models.CharField(verbose_name=u'Номер телефона', max_length=50, null=True)
 	email = models.EmailField(null=True)
-	address = models.CharField(verbose_name=u'Адресс', max_length=150, null=True)
+	address = models.CharField(verbose_name=u'Адрес', max_length=150, null=True)
 	def __unicode__(self):
-		return self.first_name
+		return self.first_name + ' ' + self.last_name
 
 class Research_interests(models.Model):
     name = models.CharField(max_length=50, choices=Fields)
-    short_description = models.TextField()
+    description = models.TextField()
     def __unicode__(self):
         return self.name
 
-
-class Request(models.Model):
-	client_id = models.ForeignKey(Client, null=True, blank=True, verbose_name=u'Ваше имя')
-	research_interests_id = models.ForeignKey(Research_interests, null=True, verbose_name=u'Область')
-	short_description = models.TextField(verbose_name=u'Описание заявки', null=True)
-	is_assigned = models.BooleanField(verbose_name=u'Назначена', default=False)
-
 class Expert(AbstractUser):
-    research_interests_id = models.ForeignKey(Research_interests, null=True, blank=True, verbose_name=u'Область')
-    current_request_id = models.ForeignKey(Request, null=True, blank=True, verbose_name=u'Текущая заявка')    
+    research_interests = models.ForeignKey(Research_interests, null=True, blank=True, verbose_name=u'Область')  
     phone_number = models.CharField(verbose_name=u'Номер личного телефона', max_length=50, null=True)
     work_phone_number = models.CharField(verbose_name=u'Номер рабочего телефона', max_length=50, null=True)
+    def __unicode__(self):
+    	return self.first_name + ' ' + self.last_name + ' ' + ', ' + self.research_interests.name
+
+class Request(models.Model):
+	client = models.ForeignKey(Client, null=True, blank=True, verbose_name=u'Заказчик', related_name='client')
+	research_interests = models.ForeignKey(Research_interests, null=True, verbose_name=u'Область')
+	title = models.CharField(verbose_name=u'Заголовок', max_length=50, null=True)
+	description = models.TextField(verbose_name=u'Описание', null=True)
+	is_assigned = models.BooleanField(verbose_name=u'Назначена', default=False)
+	expert = models.ForeignKey(Expert, null=True, blank=True, verbose_name=u'Закрепленный эксперт')
+	def __unicode__(self):
+		return self.client.organization

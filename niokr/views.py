@@ -38,7 +38,7 @@ def post_login(request):
 def expert(request):
 	if request.POST:
 		
-		form = ExpertForm(request.POST)
+		form = ExpertForm(request.POST, instance=request.user)
 		form.save()
 		return HttpResponseRedirect('http://127.0.0.1:8000/')
 	else:		
@@ -70,22 +70,14 @@ def create_request(request):
 	return render(request, 'NIOKR/Заявка.html', {'form': form})
 
 def create_client(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-    	print 'shit123'
-        # create a form instance and populate it with data from the request:
-        form = ClientForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            form.save()
-            print 'shit'
-            return HttpResponseRedirect('http://127.0.0.1:8000/request')
-        else:
-        	return render(request, 'NIOKR/Client.html', {'form': form})
-   			
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = ClientForm()
+	if request.method == 'POST':
+		form = ClientForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('http://127.0.0.1:8000/request/')
+		else:
+			return render(request, 'NIOKR/Client.html', {'form': form})
+	else:
+		form = ClientForm()
         
 	return render(request, 'NIOKR/Client.html', {'form': form})

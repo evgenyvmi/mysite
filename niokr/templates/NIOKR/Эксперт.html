@@ -30,7 +30,7 @@
             </form>
             {% for field in show_requests %}
                 {{field.short_description}}
-                {{field.client_id}}
+                {{field.client_id.first_name}}
             {% endfor %}
             {% endif %}
             <footer>
